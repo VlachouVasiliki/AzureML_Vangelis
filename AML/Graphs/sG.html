@@ -1,0 +1,108 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 500px;
+            height: 500px;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"id": 17174977, "label": 17174977, "shape": "dot", "size": 10}, {"id": 17007491, "label": 17007491, "shape": "dot", "size": 10}, {"id": 17007549, "label": 17007549, "shape": "dot", "size": 10}, {"id": 17007499, "label": 17007499, "shape": "dot", "size": 10}, {"id": 17284738, "label": 17284738, "shape": "dot", "size": 10}, {"id": 17007513, "label": 17007513, "shape": "dot", "size": 10}, {"id": 17376900, "label": 17376900, "shape": "dot", "size": 10}]);
+        edges = new vis.DataSet([{"AMT": 74552.35, "NUM": 1, "from": 17174977, "to": 17007491, "weight": 1}, {"AMT": 92000.0, "NUM": 1, "from": 17174977, "to": 17007549, "weight": 1}, {"AMT": 65618.13, "NUM": 1, "from": 17174977, "to": 17007499, "weight": 1}, {"AMT": 758513.44, "NUM": 9, "from": 17174977, "to": 17284738, "weight": 1}, {"AMT": 92335.53, "NUM": 1, "from": 17174977, "to": 17007513, "weight": 1}, {"AMT": 61014.91, "NUM": 1, "from": 17174977, "to": 17376900, "weight": 1}, {"AMT": 41258.82, "NUM": 2, "from": 17284738, "to": 17007549, "weight": 1}, {"AMT": 169946.0, "NUM": 2, "from": 17284738, "to": 17007513, "weight": 1}, {"AMT": 37000.66, "NUM": 3, "from": 17284738, "to": 17376900, "weight": 1}, {"AMT": 35300.89, "NUM": 2, "from": 17284738, "to": 17007499, "weight": 1}, {"AMT": 95916.9, "NUM": 2, "from": 17284738, "to": 17007491, "weight": 1}, {"AMT": 50946.02, "NUM": 2, "from": 17007491, "to": 17376900, "weight": 1}, {"AMT": 18522.67, "NUM": 3, "from": 17007491, "to": 17007513, "weight": 1}, {"AMT": 118330.82, "NUM": 3, "from": 17007491, "to": 17007499, "weight": 1}, {"AMT": 228968.37, "NUM": 3, "from": 17007491, "to": 17007549, "weight": 1}, {"AMT": 119070.16, "NUM": 2, "from": 17376900, "to": 17007549, "weight": 1}, {"AMT": 99939.07, "NUM": 1, "from": 17376900, "to": 17007513, "weight": 1}, {"AMT": 242651.85, "NUM": 5, "from": 17376900, "to": 17007499, "weight": 1}, {"AMT": 93704.05, "NUM": 2, "from": 17007499, "to": 17007549, "weight": 1}, {"AMT": 603610.06, "NUM": 8, "from": 17007499, "to": 17007513, "weight": 1}, {"AMT": 17112.5, "NUM": 1, "from": 17007513, "to": 17007549, "weight": 1}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

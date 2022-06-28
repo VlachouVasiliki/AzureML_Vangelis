@@ -1,0 +1,94 @@
+
+# In[ ]:
+
+
+dataset = input_ds
+df = dataset.to_pandas_dataframe()
+
+
+# In[ ]:
+
+
+df.shape
+
+
+# In[ ]:
+
+
+pd.set_option('max_columns', None) #display all columns
+#pd.reset_option(“max_columns”) #to return to default
+
+
+# In[ ]:
+
+
+df.head()
+
+
+# In[ ]:
+
+
+df['vBankingFlag'].value_counts().plot(kind = 'pie',y = 'vBankingFlag',figsize=(5, 5),title = 'vBankingFlag',autopct='%1.1f%%')
+
+
+# In[ ]:
+
+
+df = df.drop(columns = ['Customer_ID','Year','Month','Remmitances_In_nonGR_1Y_MaxAmount','Remmitances_In_nonGR_1Y_Amount','education_Code',    'Link_contacts_Last_3m_neu','Eb_Logins_3M_Months_num','Eb_Logins_3M_num','Legal_Person','City','Age_Band','Occupation','Global_SubSubSegment'])
+
+
+# In[ ]:
+
+
+def binF(x):
+    if x is False:
+        z = 0
+    elif math.isnan(x):
+        z = 0
+    else:
+        z =1
+    return z
+
+
+# In[ ]:
+
+
+df['vBankingFlag'] = df['vBankingFlag'].apply(binF)
+
+
+# In[ ]:
+
+
+#dummy variables
+for col in df.columns:       
+       if df[col].dtypes=='object':
+            #df.drop(columns=col, inplace = True)
+            df = pd.get_dummies(df, prefix=col + '_', columns=[col])
+
+
+# In[ ]:
+
+
+for col in df.columns:       
+       if df[col].dtypes=='datetime64[ns]':
+            df = df.drop(columns = col)
+
+
+# In[ ]:
+
+
+def replace_gt(x):
+    x = x.replace('<=','le ')
+    x = x.replace('>=','ge')
+    x = x.replace('>','gt ')
+    x = x.replace('<','lt ')
+    return x
+
+
+# In[ ]:
+
+
+df.columns = [replace_gt(x) for x in df.columns]
+
+
+prepared_vBankingPB = Dataset.Tabular.register_pandas_dataframe(df, datastore, "prepared_vBankingPB", show_progress=True)
